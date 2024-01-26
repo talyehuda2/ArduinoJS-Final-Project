@@ -59,6 +59,8 @@ board.on("ready", function () {
   io.on("connection", (user) => {
     prLt.on("data", function () {
       user.emit("PhotoresistorLeftTop-value", this.value);
+      io.emit("ServoVertical-value", servov.value);
+      io.emit("ServoHorizontal-value", servoh.value);
     });
     prRt.on("data", function () {
       user.emit("PhotoresistorRightTop-value", this.value);
@@ -67,16 +69,21 @@ board.on("ready", function () {
       user.emit("PhotoresistorLeftDown-value", this.value);
     });
     prRd.on("data", function () {
-      console.log("prRD");
       user.emit("PhotoresistorRightDown-value", this.value);
     });
-    servoh.on("change", function () {
-      console.log("change servoH");
-      io.emit("ServoHorizontal-value", this.value);
+    servoh.on("data", function () {
+      console.log("ServoHorizontalData:", this.value);
     });
-    servov.on("change", function () {
+    servov.on("data", function () {
       console.log("change servoV");
       io.emit("ServoVertical-value", this.value);
+    });
+
+    user.on("Position", (data) => {
+      let position = data;
+      servoh.to(position[0]);
+      servov.to(position[1]);
+      console.log("Position: ", position);
     });
 
     user.on("press on", () => {
@@ -88,11 +95,11 @@ board.on("ready", function () {
     });
   });
 
-  setInterval(moveServo, dtime);
+  // setInterval(moveServo, dtime);
 });
 
 // function responsible to move the servo 1 step into the light
-function moveServo() {
+function moveServoToLight() {
   let prLtValue = prLt.value;
   let prRtValue = prRt.value;
   let prLdValue = prLd.value;
@@ -136,3 +143,5 @@ function moveServo() {
     servoh.to(servohLocation);
   }
 }
+
+function moveSercoToMouseClick() {}
