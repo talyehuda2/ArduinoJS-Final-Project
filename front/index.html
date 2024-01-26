@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arduino Controller!</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.socket.io/4.7.3/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <button id="">Go to the light!</button>
+    <button id="">Run from the light!</button>
+    <button id="on">Stop right there!</button>
+    <h1 style="color: white">Those are the values of the light:</h1>
+    <h2 id="photoresistorLeftTop" style="color: white">LeftTop</h2>
+    <h2 id="photoresistorRightTop" style="color: white">RightTop</h2>
+    <h2 id="photoresistorLeftDown" style="color: white">LeftDown</h2>
+    <h2 id="photoresistorRightDown" style="color: white">RightDown</h2>
+    <h1 style="color: white">Those are the values of the Servos:</h1>
+    <h2 id="servoHorizontal" style="color: white">ServoH</h2>
+    <h2 id="ServoVertical" style="color: white">ServoV</h2>
+  </body>
+  <script src="front.js"></script>
+</html>
