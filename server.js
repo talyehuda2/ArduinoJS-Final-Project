@@ -81,9 +81,10 @@ board.on("ready", function () {
 
     user.on("Position", (data) => {
       let position = data;
-      servoh.to(position[0]);
-      servov.to(position[1]);
-      console.log("Position: ", position);
+      position = limitPosition(position);
+      setTimeout(() => {
+        moveSercoToHand(position[0], position[1]);
+      }, 50);
     });
 
     user.on("press on", () => {
@@ -95,7 +96,7 @@ board.on("ready", function () {
     });
   });
 
-  // setInterval(moveServo, dtime);
+  // setInterval(moveServoToLight, dtime);
 });
 
 // function responsible to move the servo 1 step into the light
@@ -144,4 +145,25 @@ function moveServoToLight() {
   }
 }
 
-function moveSercoToMouseClick() {}
+function moveSercoToMouseClick(posH, posV) {}
+
+function moveSercoToHand(position) {
+  console.log("postionH: ", position[0]);
+  console.log("postionV: ", position[1]);
+  servoh.to(position[0]);
+  servov.to(position[1]);
+}
+
+function limitPosition(positionH, positionV) {
+  if (positionH > servohLimitHigh) {
+    positionH = servohLimitHigh;
+  } else if (positionH < servohLimitLow) {
+    positionH = servohLimitLow;
+  }
+  if (positionV > servovLimitHigh) {
+    positionV = servovLimitHigh;
+  } else if (positionV < servovLimitLow) {
+    positionV = servovLimitLow;
+  }
+  return [positionH, positionV];
+}

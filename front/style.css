@@ -23,16 +23,10 @@ h2 {
   margin: 10px 0;
 }
 
-/* body {
-  border-radius: 50px;
-  background: #001061;
-  box-shadow: 20px 20px 60px #000e52, -20px -20px 60px #001270;
-  align-items: center;
+#video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
 }
-button {
-  border-radius: 50px;
-  background: #001061;
-  box-shadow: 20px 20px 60px #000e52, -20px -20px 60px #001270;
-  color: white;
-  padding: 12px;
-} */
