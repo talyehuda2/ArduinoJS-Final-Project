@@ -3,25 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Arduino Controller!</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.socket.io/4.7.3/socket.io.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/handtrackjs/dist/handtrack.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Your HTML Page</title>
   </head>
   <body>
-    <!-- <button id="">Go to the light!</button>
-    <button id="">Run from the light!</button>
-    <button id="on">Stop right there!</button> -->
-    <video id="video" width="1280" height="960" autoplay></video>
-    <h1 style="color: white">Those are the values of the light:</h1>
-    <h2 id="photoresistorLeftTop" style="color: white">LeftTop</h2>
-    <h2 id="photoresistorRightTop" style="color: white">RightTop</h2>
-    <h2 id="photoresistorLeftDown" style="color: white">LeftDown</h2>
-    <h2 id="photoresistorRightDown" style="color: white">RightDown</h2>
-    <h1 style="color: white">Those are the values of the Servos:</h1>
-    <h2 id="servoHorizontal" style="color: white">ServoH</h2>
-    <h2 id="ServoVertical" style="color: white">ServoV</h2>
+    <h1>Arduino</h1>
+
+    <div class="toggle-buttons">
+      <button onclick="toggleView('light-tracker')">Light Tracker</button>
+      <button onclick="toggleView('face-hand-tracker')">
+        Face & Hand Tracker
+      </button>
+      <button onclick="toggleView('mouse-tracker')">Mouse Tracker</button>
+    </div>
+
+    <div id="light-tracker" class="tracker-section active">
+      <h2>Light Tracker</h2>
+      <h2 id="light-sensor-1">Light Sensor 1: Value</h2>
+      <h2 id="light-sensor-2">Light Sensor 2: Value</h2>
+      <h2 id="light-sensor-3">Light Sensor 3: Value</h2>
+      <h2 id="light-sensor-4">Light Sensor 4: Value</h2>
+      <h2 id="servo-1">Servo 1 Position: Value</h2>
+      <h2 id="servo-2">Servo 2 Position: Value</h2>
+    </div>
+
+    <div id="face-hand-tracker" class="tracker-section">
+      <h2 id="face-hand-title">Face & Hand Tracker</h2>
+      <div id="face-positions">
+        <p>Hand/Face Position X: <span id="face-position-x">Value</span></p>
+        <p>Hand/Face Y: <span id="face-position-y">Value</span></p>
+      </div>
+      <video
+        id="video"
+        width="1280"
+        height="720"
+        controls
+        style="display: block"
+      ></video>
+    </div>
+
+    <div id="mouse-tracker" class="tracker-section">
+      <h2>Mouse Tracker</h2>
+      <h2 id="mouse-x">Mouse X Position: Value</h2>
+      <h2 id="mouse-y">Mouse Y Position: Value</h2>
+    </div>
   </body>
   <script src="front.js"></script>
 </html>

@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
-const board = new five.Board();
+const board = new five.Board({ port: "COM4" });
 
 const servohLimitLow = 5;
 const servohLimitHigh = 175;
@@ -59,8 +59,8 @@ board.on("ready", function () {
   io.on("connection", (user) => {
     prLt.on("data", function () {
       user.emit("PhotoresistorLeftTop-value", this.value);
-      io.emit("ServoVertical-value", servov.value);
       io.emit("ServoHorizontal-value", servoh.value);
+      io.emit("ServoVertical-value", servov.value);
     });
     prRt.on("data", function () {
       user.emit("PhotoresistorRightTop-value", this.value);
@@ -71,32 +71,28 @@ board.on("ready", function () {
     prRd.on("data", function () {
       user.emit("PhotoresistorRightDown-value", this.value);
     });
-    servoh.on("data", function () {
-      console.log("ServoHorizontalData:", this.value);
-    });
-    servov.on("data", function () {
-      console.log("change servoV");
-      io.emit("ServoVertical-value", this.value);
+
+    user.on("light-tracker", () => {
+      console.log("light-tracker");
+      moveServoToLight();
     });
 
-    user.on("Position", (data) => {
+    user.on("face-hand-tracker", (data) => {
+      console.log("face-hand-tracker");
       let position = data;
       position = limitPosition(position);
       setTimeout(() => {
-        moveSercoToHand(position[0], position[1]);
-      }, 50);
+        moveServosToPosition(position[0], position[1]);
+      }, 200);
     });
 
-    user.on("press on", () => {
-      led.on();
-    });
-
-    user.on("press off", () => {
-      led.off();
+    user.on("mouse-tracker", (data) => {
+      let position = data;
+      console.log(`mouse tracker`);
+      position = limitPosition(position);
+      moveServosToPosition(position[0], position[1]);
     });
   });
-
-  // setInterval(moveServoToLight, dtime);
 });
 
 // function responsible to move the servo 1 step into the light
@@ -145,9 +141,8 @@ function moveServoToLight() {
   }
 }
 
-function moveSercoToMouseClick(posH, posV) {}
-
-function moveSercoToHand(position) {
+// function that get position with Horizontal and Vertical Position and set the servos values to them
+function moveServosToPosition(position) {
   console.log("postionH: ", position[0]);
   console.log("postionV: ", position[1]);
   servoh.to(position[0]);
